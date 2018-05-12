@@ -1,0 +1,6 @@
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\bin\Debug\MPSpeechBubbles.dll
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\bin\Debug\MPSpeechBubbles.pdb
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.csprojAssemblyReference.cache
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.csproj.CoreCompileInputs.cache
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.dll
+C:\Users\Taylor Cassity\source\repos\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.pdb
