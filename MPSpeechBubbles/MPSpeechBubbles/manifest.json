@@ -1,8 +1,8 @@
 ﻿{
   "Name": "MPSpeechBubbles",
   "Author": "Kalthramis",
-  "Version": "0.5.0",
-  "Description": "WIP to add speech bubbles to Multiplayer",
+  "Version": "1.0.0",
+  "Description": "Adds speech bubbles for both singleplayer and multiplayer",
   "UniqueID": "Kalthramis.MPSpeechBubbles",
   "EntryDll": "MPSpeechBubbles.dll",
   "MinimumApiVersion": "2.0",
