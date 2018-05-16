@@ -1,3 +1,28 @@
+//Honestly, this is a clustercluck of notes I c/p'd for later organiziation or review. Currently, it's a mess.
+
+
+For using the helper: Just store a reference to the object I need (chat messages list). Then the helper doesn't need to go get it every frame.
+
+// in class
+private IList<ChatMessage> ChatMessages;
+
+// probably in AfterDayStarted
+this.ChatMessages = this.Helper.Reflection.GetField<List<ChatMessage>>(Game1.chatBox, "messages").GetValue();
+
+// in update tick
+if (!Context.IsWorldReady)
+   return;
+IList<ChatMessages> messages = this.ChatMessages;
+
+
+
+
+Common usage:
+//MenuEvents.MenuClosed += this.PrintMenu;
+//this.Monitor.Log($"{Game1.player.Name} pressed {e.Button}.");
+
+
+
 npc.doEmote(emoteID)
 
  Yep, you can use "Action": "EditData" to add/edit dialogue entries in a file.
