@@ -12,3 +12,4 @@ C:\Users\Kal\Documents\GitHub\StardewValley\MPSpeechBubbles\MPSpeechBubbles\obj\
 C:\Users\Kal\Documents\GitHub\StardewValley\MPSpeechBubbles\MPSpeechBubbles\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Kal\Documents\GitHub\StardewValley\MPSpeechBubbles\MPSpeechBubbles\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Kal\Documents\GitHub\StardewValley\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.csproj.CopyComplete
+C:\Users\Kal\Documents\GitHub\StardewValley\MPSpeechBubbles\MPSpeechBubbles\obj\Debug\MPSpeechBubbles.csprojAssemblyReference.cache

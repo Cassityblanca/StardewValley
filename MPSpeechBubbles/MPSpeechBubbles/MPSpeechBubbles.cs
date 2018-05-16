@@ -15,18 +15,28 @@ namespace MPSpeechBubbles
 	public class MPSpeechBubbles : Mod
 	{
 
-		public int chatCount;
-		static ModConfig config;
-		public IList<ChatMessage> cMsgs;
-		Dictionary<Farmer, List<SpeechBubble>> chatDict = new Dictionary<Farmer, List<SpeechBubble>>();
 		bool debug = Kal_Extensions.debug;
 
+		static ModConfig config;
+		public int chatCount;
+		public IList<ChatMessage> cMsgs;
+		Dictionary<Farmer, List<SpeechBubble>> chatDict = new Dictionary<Farmer, List<SpeechBubble>>();
+
+
+		/// <summary>
+		/// Data-type for sent messages
+		/// </summary>
 		class SpeechBubble
 		{
 			DateTime born;
 			public string msg;
 			public int shake;
 
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			/// <param name="dateTime"></param>
+			/// <param name="message"></param>
 			public SpeechBubble(DateTime dateTime, string message)
 			{
 				this.born = dateTime;
@@ -42,7 +52,7 @@ namespace MPSpeechBubbles
 			/// <returns></returns>
 			private int checkIsShake()
 			{
-				if (msg.Count(x => x == '!') > 2)
+				if (msg.Count(x => x == '!') > 1)
 				{
 					return 0;
 				}
@@ -111,16 +121,15 @@ namespace MPSpeechBubbles
 		/// </summary>
 		private void SpawnBubble()
 		{
-			String speaker = "";
 
 			//For each new message
 			for (int i = 0; i < this.cMsgs.Count - chatCount; i++)
 			{
 				//Parse the message
-				String message = ChatMessage.makeMessagePlaintext(this.cMsgs[this.cMsgs.Count - 1 - i].message);
+				String msg = ChatMessage.makeMessagePlaintext(this.cMsgs[this.cMsgs.Count - 1 - i].message);
 
-				//IsJoinMessage
-				if (message[0].Equals('>'))
+				//Isn't Player Message
+				if (msg[0].Equals('>') || !msg.Contains(":"))
 					return;
 
 				//Bug: ^string causes the text to appear below the speech bubble
@@ -128,33 +137,33 @@ namespace MPSpeechBubbles
 				 * Handle bug present in 1.3.10
 				 * See https://community.playstarbound.com/threads/stardew-valley-multiplayer-beta-known-issues-fixes.142850/page-206#post-3278207
 				 */
-				string[] words = message.Split(' ');
-				foreach (string word in words)
-					if (word.Length > 30)
-					{
-						this.Monitor.Log($"Word in message too long, ignoring. See: https://community.playstarbound.com/threads/stardew-valley-multiplayer-beta-known-issues-fixes.142850/page-206#post-3278207");
-						return;
-					}
+				//string[] words = msg.Split(' ');
+				//foreach (string word in words)
+				//	if (word.Length > 30)
+				//	{
+				//		this.Monitor.Log($"Word in message too long, ignoring. See: https://community.playstarbound.com/threads/stardew-valley-multiplayer-beta-known-issues-fixes.142850/page-206#post-3278207");
+				//		return;
+				//	}
 
 				if (debug)
 				{
 					Monitor.LogT($"All sent messages:");
 					for (int x = 0; x < this.cMsgs.Count; x++)
 						Monitor.LogT($"{ChatMessage.makeMessagePlaintext(this.cMsgs[x].message)}");
-					Monitor.LogT($"Trying to parse message, {message}");
+					Monitor.LogT($"Trying to parse message, {msg}");
 				}
 
 				//Parse msg
-				speaker = message.Substring(0, message.IndexOf(':'));
-				message = message.Substring(message.IndexOf(':') + 1);
+				String farmer = msg.Substring(0, msg.IndexOf(':'));
+				msg = msg.Substring(msg.IndexOf(':') + 1);
 
 				//Find farmer
 				foreach (Farmer me in Game1.getAllFarmers())
 				{
 
-					if (me.Name.Equals(speaker))
+					if (me.Name.Equals(farmer))
 					{
-						SpeechBubble talk = new SpeechBubble(DateTime.Now, message);
+						SpeechBubble talk = new SpeechBubble(DateTime.Now, msg);
 						List<SpeechBubble> newMsg = new List<SpeechBubble>();
 						if (chatDict.ContainsKey(me))
 						{
@@ -179,24 +188,24 @@ namespace MPSpeechBubbles
 		/// <param name="e"></param>
 		public void DrawBubble(object sender, EventArgs e)
 		{
-			foreach (KeyValuePair<Farmer, List<SpeechBubble>> speaker in chatDict)
+			foreach (KeyValuePair<Farmer, List<SpeechBubble>> farmer in chatDict)
 			{
-				int i = speaker.Value.Count;
+				int i = farmer.Value.Count;
 				List<SpeechBubble> toRemove = new List<SpeechBubble>();
 
-				foreach (SpeechBubble message in speaker.Value)
+				foreach (SpeechBubble msg in farmer.Value)
 				{
-					if (message.IsExpired())
+					if (msg.IsExpired())
 					{
-						toRemove.Add(message);
+						toRemove.Add(msg);
 						continue;
 					}
-					(speaker.Key).DrawSpeechBubble(message.msg, (--i * config.OldMsgUpShift), message.shake);
+					(farmer.Key).DrawSpeechBubble(msg.msg, (--i * config.OldMsgUpShift), msg.shake);
 				}
 
 				//Remove old messages
 				for (int j = 0; j < toRemove.Count; j++)
-					speaker.Value.Remove(toRemove[j]);
+					farmer.Value.Remove(toRemove[j]);
 			}
 		}
 	}

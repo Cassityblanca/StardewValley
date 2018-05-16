@@ -6,5 +6,5 @@
   "UniqueID": "Kalthramis.MPSpeechBubbles",
   "EntryDll": "MPSpeechBubbles.dll",
   "MinimumApiVersion": "2.0",
-  "UpdateKeys": []
+"UpdateKeys": [ 2192 ]
 }
