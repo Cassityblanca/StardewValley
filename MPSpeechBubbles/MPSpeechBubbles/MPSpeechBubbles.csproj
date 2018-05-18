@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Kal_Extensions.cs" />
     <Compile Include="ModConfig.cs" />
     <Compile Include="MPSpeechBubbles.cs" />
     <Compile Include="MPSpeechBubblesDrawing.cs" />
