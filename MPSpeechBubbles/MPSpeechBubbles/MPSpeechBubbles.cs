@@ -87,7 +87,7 @@ namespace MPSpeechBubbles
 
 			public bool IsExpired()
 			{
-				return ((DateTime.Now).Subtract(born) >= TimeSpan.FromSeconds(MPSpeechBubbles.config.MsgTime));
+				return ((DateTime.Now).Subtract(born) >= TimeSpan.FromSeconds(MPSpeechBubbles.config.OldMessageDisaplyLife));
 			}
 
 			internal void setColor(string inColor)
@@ -178,7 +178,7 @@ namespace MPSpeechBubbles
 			if (this.cMsgs.Count != chatCount)
 			{
 				//Monitor.Log($"Spawning bubble");
-				if (!config.toggleSP)
+				if (!config.BubblesInSP)
 				{
 					if (Context.IsMultiplayer)
 						return;
@@ -237,11 +237,16 @@ namespace MPSpeechBubbles
 						//TODO: rewrite this to not be absolutely terrible
 						if (msg.Contains("   ["))
 						{
-							if(config.UseColors)
-								talk.setColor(msg.Substring(msg.IndexOf("   [") + 4).TrimEnd(']'));
+							if (msg.EndsWith("]"))
+							{
+								if (config.UseSpeechBubbleColors)
+									talk.setColor(msg.Substring(msg.IndexOf("   [") + 4).TrimEnd(']'));
 
-							msg = msg.Substring(0, msg.IndexOf("   ["));
-							talk.msg = msg;
+								msg = msg.Substring(0, msg.IndexOf("   ["));
+								talk.msg = msg;
+							}
+							else
+								Monitor.Log("Message could not be displayed. Message contains a [color] indicator, and is too long. Waiting on Ape for bugfix");
 						}
 
 
@@ -281,7 +286,7 @@ namespace MPSpeechBubbles
 						continue;
 					}
 
-					(farmer.Key).DrawSpeechBubble(msg, (--i * config.OldMsgUpShift), config.MsgOpacity);
+					(farmer.Key).DrawSpeechBubble(msg, (--i * config.OldMessageVerticalShift), config.BubbleOpacity);
 				}
 
 				//Remove old messages
